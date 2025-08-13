@@ -1,3 +1,31 @@
+# ADSC1
+Dieses Repository enthält den Code-Teil der Studienarbeit für das Modul ADSC21 Applied Data Science II: Machine Learning und Reporting
+
+### Installation
+
+1. **Klonen Sie das Repository und wechseln Sie in das Verzeichnis**
+
+    ```bash
+    git clone git@github.com:juliisch/ADSC1.git
+    ```
+    ```bash
+    cd ADSC1
+    ```
+
+2. **Bibliotheken installieren**
+
+    Installieren Sie die benötigten Bibliotheken über die Datei `requirements.txt`.
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+    Nach der Installation der Bibliotheken ist es erforderlich, das Programm neu zu starten, damit diese wirksam werden.
+
+2. **Führen Sie das Notebook aus**
+
+    Führen Sie das Notebook `01_.ipynb` aus.b
+
 | Variable      | Variablenbezeichnung                                                    
 |---------------|-------------------------------------------------------------------
 | PropertyID    | Eindeutige ID für jede Immobilie                  
