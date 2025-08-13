@@ -1,0 +1,8 @@
+ipykernel
+pandas
+matplotlib
+pyproj
+ydata-profiling
+folium
+geopy
+pyarrow
