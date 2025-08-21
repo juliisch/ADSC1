@@ -1,5 +1,6 @@
 # ADSC1
-Dieses Repository enthält den Code-Teil der Studienarbeit für das Modul ADSC21 Applied Data Science II: Machine Learning und Reporting
+Dieses Repository enthält den Code-Teil der Studienarbeit für das Modul ADSC21 Applied Data Science II: Machine Learning und Reporting.
+
 
 ### Installation
 
@@ -24,27 +25,9 @@ Dieses Repository enthält den Code-Teil der Studienarbeit für das Modul ADSC21
 
 2. **Führen Sie das Notebook aus**
 
-    Führen Sie das Notebook `01_.ipynb` aus.b
-
-| Variable      | Variablenbezeichnung                                                    
-|---------------|-------------------------------------------------------------------
-| PropertyID    | Eindeutige ID für jede Immobilie                  
-| PropType      | Typ
-| taxkey        | Steuerschlüssel                   
-| Address       | Adresse                            
-| CondoProject  | Kennzeichen ob Immobilie Teil eines Projektes ist
-| District      | Bezirksnummer                          
-| nbhd          | Nachbarschaftnummer                  
-| Style         | Architektonische Stil                  
-| Extwall       | Art des verwendeten Außenwandmaterials                       
-| Stories       | Anzahl der Stockwerke im Gebäufe                         
-| Year_Built    | Jahr in dem das Gebäude gebaut wurde                              
-| Rooms         | Anzahl der Räume im Gebäude                          
-| FinishedSqft  | Gesamte Quadratmeterzahl 
-| Units         | Anzahl der Einheiten 
-| Bdrms         | Anzahl der Schlafzimmer                         
-| Fbath         | Anzahl der kompletten Badezimmer                   
-| Hbath         | Anzahl der halben Badezimmer                  
-| Lotsize       | Gräße des mit der Immobilie verbundene Grundstücks             
-| Sale_date     | Verkaufsdatum                           
-| Sale_price    | Verkaufspreis                              
+    - In dem Notebook `notebooks/01_Merge.iypnb` werden die Daten der einzelnen Jahre zu einem Datensatz zusammengeführt.
+    - Das Notebook `notebooks/02_EDA.iypnb` beinhaltet die Dateneinsicht, Datenaufbereitung. 
+    - In dem Notebook `notebooks/03_Visualization.iypnb` werden die zusammengeführten und aufbereiteten Daten grafisch dargestellt. 
+    - Das Notebook `notebooks/04_Modelling.iypnb` beinhaltet das Training der verschiednen Modelle inklusive der Evaluation und anwendung der XAI Methoden. 
+    
+    Hinweis: In der Datei `notebooks/functions.py` befinden sich die verwendeten geschriebenen Funktionen. 

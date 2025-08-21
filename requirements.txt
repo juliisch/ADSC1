@@ -6,3 +6,4 @@ ydata-profiling
 folium
 geopy
 pyarrow
+xgboost
