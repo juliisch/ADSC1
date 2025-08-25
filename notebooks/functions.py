@@ -9,8 +9,31 @@ import matplotlib.pyplot as plt
 from sklearn.inspection import permutation_importance
 
 
+
 '''
-Funktion: Laden der aufbereiteten Daten, mit dem gewünschten Datenformat.
+Funktion:       Bestimmung der Anzahl der NaN-Werte pro Variable.
+Input:          df (Datensatz)
+Output:         df_nan (DF mit der absoluten und relativen Anzahl pro Variable)
+Funktionsweise: Basierend auf dem übergebenden Datensatz wird bestimmt, wie viele NaN-Werte es pro Spalte gibt.
+                Zusätzlich wird bestimmt, wie viel das in Prozent zum gesamzten Datensatz ausmacht.
+                Beide Werte werden in einem DF gespeichert.
+'''
+def get_nanValue(df):
+
+    count_nan = df.isna().sum()
+    # Prozentsatz NaN
+    nan_percent = round((count_nan / len(df)) * 100,2)
+    # DataFrame
+    df_nan = pd.DataFrame({
+        'Anzahl NaN': count_nan,
+        'Prozent NaN_': nan_percent
+    }).sort_values(by='Anzahl NaN', ascending=False)
+
+    return df_nan
+
+
+'''
+Funktion: Laden der aufbereiteten Daten, mit dem erforderlichen Datenformat.
 '''
 def load_data():
     df = pd.read_csv("../data/output_data/property_sales_2004-2024_preped.csv",
@@ -23,7 +46,8 @@ def load_data():
             "hbath": "Int64",
             "lotsize": "Int64",
             "sale_price": "Int64",
-            #"sale_date": "Int64"
+            "sale_date_month": "Int64",
+            "sale_date_year": "Int64",
         }
     )
     return(df)
@@ -38,21 +62,19 @@ Input:          y_true (Echte Zielwerte)
                 y_pred (Vom Modell bestimmte Zielwerte)
                 name_model (Name des Modells)
 Output:         df_result (Evaluationsmetriken als DF)
-Funktionsweise: Anhand der vom Modell bestimmten Zielwerte und den tatsächlichen Zielwerte werden die Evaluationsmetriken Mean Absolute Error, Mean Squared Error, Root Mean Squared Error und das Bestimmtheitsmaß bestimmt.
+Funktionsweise: Anhand der vom Modell vorhergesagten Zielwerten und den tatsächlichen Zielwerte werden die Evaluationsmetriken Mean Absolute Error, Mean Squared Error und das Bestimmtheitsmaß bestimmt.
                 Die Werte werden in einem DF gespeichert und zurückgegeben.
 '''
 def calculate_metrics(y_true, y_pred, name_model):
     # Berechnung der Evaluationsmetriken
     mae = round(mean_absolute_error(y_true, y_pred),3)
     mse = round(mean_squared_error(y_true, y_pred),3)
-    #rmse = round(np.sqrt(mse),3)
     r2 = round(r2_score(y_true, y_pred),3)
     
     # Ausgabe der Evaluationsmetriken
     print(name_model)
     print(f"MAE: {mae}")
     print(f"MSE: {mse}")
-    #print(f"RMSE: {rmse}")
     print(f"R²: {r2}")
     print("-" * 25)
     
@@ -61,19 +83,26 @@ def calculate_metrics(y_true, y_pred, name_model):
         "Model": [name_model],
         "MAE": [mae],
         "MSE": [mse],
-        #"RMSE": [rmse],
         "R²": [r2]
     })
     
     return df_result
 
+'''
+Funktion:       Erstellung eines Plot, in dem der vorhergesagte und tatsächliche Wert gegeinander geplottet werden.
+Input:          y_true (Echte Zielwerte)
+                y_pred (Vom Modell bestimmte Zielwerte)
+                name_model (Name des Modells)
+Funktionsweise: Die vom Modell vorhergesagten Zielwerte und die tatsächlichen Zielwerte werden in einem Scatter-Plot grafisch dargestellt. 
+                Die Grafik wird anschließend gespeichert. 
+'''
 def generate_predictedVSactualPlot(y_pred, y_test, name_model):
     fig, ax1 = plt.subplots(figsize=(7, 5))
 
     # Predictions
     ax1.scatter(y_test, y_pred, alpha=0.6, color="blue", s=20)
-    min_val, max_val = y_test.min(), y_test.max()
-    ax1.plot([min_val, max_val], [min_val, max_val], "r--", alpha=0.8, label="Perfect Prediction Line")
+    #min_val, max_val = y_test.min(), y_test.max()
+    #ax1.plot([min_val, max_val], [min_val, max_val], "r--", alpha=0.8, label="Perfect Prediction Line")
 
     # Axes titles and labels
     ax1.set_title("Vorhergesagter vs Tatsächlicher Verkaufspreis (Sales Price)")
@@ -86,7 +115,16 @@ def generate_predictedVSactualPlot(y_pred, y_test, name_model):
     plt.savefig(f"../output/sales_price_predictionVsactual_{name_model}.png")
     plt.close(fig)
 
-
+'''
+Funktion:       Durchführung einer Cross-Validation.
+Input:          estimator_model (Model)
+                X_train (Trainingsdaten)
+                y_train (Trainingsdaten-Zielwert)
+                name_model (Name des Modells)
+Output:         df_result (Cross-Validation-Werte als DF)
+Funktionsweise: Anhand des Modell wird mit den Trainingsdaten und den Trainingsdaten-Zielwerte eine Cross-Validation mit 5 Folds durchgeführt.
+                Zudem werden die Ergebnisse der Cross-Validation in einem DF gespeichert und zurückgegeben.
+'''
 def calculate_crossValidation(estimator_model,X_train,y_train, name_model):
     score_cv = cross_val_score(estimator=estimator_model, X=X_train, y=y_train, cv=5)
 
@@ -101,7 +139,19 @@ def calculate_crossValidation(estimator_model,X_train,y_train, name_model):
 
     return df_result
 
-
+'''
+Funktion:       Durchführung einer Hyperparametertuning mit GridSearch.
+Input:          estimator_model (Model)
+                parameters_model (Paramter-Grid)
+                X_train (Trainingsdaten)
+                y_train (Trainingsdaten-Zielwert)
+                X_test (Testdaten)
+                y_test (Testdaten-Zielwert)
+                name_model (Name des Modells)
+Output:         best_model (Ermitteltes beste Modell)
+Funktionsweise: Für das übergebende Modell wird basierend auf dem Parameter-Grid das Hyperparamtertuning mit GridSearch durchgeführt.
+                Im Anschluss werden die besten Ergebnisse ausgegeben und das beste Modell gespeichert und zurückgegeben. 
+'''
 def conduct_gridSearch(estimator_model,parameters_model, X_train,y_train, X_test, y_test, name_model):
     grid_search_dt = GridSearchCV(estimator=estimator_model, param_grid=parameters_model, cv=3, n_jobs=5)
     grid_search_dt.fit(X_train, y_train)
@@ -116,7 +166,17 @@ def conduct_gridSearch(estimator_model,parameters_model, X_train,y_train, X_test
 
     return best_model
 
-
+'''
+Funktion:       Anwendung der SHAP-Methode
+Input:          estimator_model (Model)
+                X_train (Trainingsdaten)
+                X_test (Testdaten)
+                name_model (Name des Modells)
+Funktionsweise: Aus dem übergebenden Pipeline-Model werden die Preprocess-Schritte und Model-Schritte extrahiert. 
+                Die Trainings- und Testdaten werden Transformiert und die durch die Preprocess Entstandenen Spaltennamen werden gespeichert.
+                Abhängig vom Modell wird der Explainer bestimmt und entsprechend die Shap-Werte ermittelt.
+                Es wird ein Shap-Plot generiert und gespeicher. 
+'''
 def calculate_shap(estimator_model, X_train, X_test, name_model):
     step_preprocess   = estimator_model.named_steps["preprocess"]
     step_model = estimator_model.named_steps["model"]
@@ -140,7 +200,17 @@ def calculate_shap(estimator_model, X_train, X_test, name_model):
     #plt.show()
     #shap.summary_plot(shap_values, X_test_transform, feature_names=featureNames) 
 
-
+'''
+Funktion:       Anwendung der PFI-Methode
+Input:          estimator_model (Model)
+                y_test (Testdaten-Zielwert)
+                X_test (Testdaten)
+                name_model (Name des Modells)
+Funktionsweise: Aus dem übergebenden Pipeline-Model werden die Preprocess-Schritte und Model-Schritte extrahiert. 
+                Die Trainings- und Testdaten werden Transformiert und die durch die Preprocess Entstandenen Spaltennamen werden gespeichert.
+                Es wird die PFI-Methode mit 40 Wiederholungen angwendet und ....
+                Es wird ein PFI-Plot generiert und gespeicher. 
+'''
 def calculate_pfi(estimator_model, y_test, X_test, name_model):
     step_preprocess = estimator_model.named_steps["preprocess"]
     step_model = estimator_model.named_steps["model"]

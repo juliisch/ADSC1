@@ -1,0 +1,29 @@
+# # Datumsspalte in Monat/Jahr aufteilen. In gesamten Datensatz liegen die Datenformate "yyyy-mm", "mm/dd/yyyy" und "yyyy-mm-dd". 
+# df["sale_date_mm/dd/yyyy"] = df["Sale_date"].where(df["Sale_date"].str.contains("/"))
+# df["sale_date_temp"] = df["Sale_date"].where(~df["Sale_date"].str.contains("/"))
+# df["sale_date_yyyy-mm"] = df["sale_date_temp"].where(df["sale_date_temp"].str.len() == 7)
+
+# # Zeilen mit dem Format "yyyy-mm"
+# df["sale_date_year_1"] = df["sale_date_yyyy-mm"].str[:4]
+# df["sale_date_month_1"] = df["sale_date_yyyy-mm"].str[-2:]
+
+# # Zeilen mit dem Format "mm/dd/yyyy"
+# df["sale_date_mm/dd/yyyy"] = pd.to_datetime(df["sale_date_mm/dd/yyyy"], format='%m/%d/%Y')
+# df['sale_date_year_2'] = df["sale_date_mm/dd/yyyy"].dt.year.astype(str)
+# df['sale_date_month_2'] = df["sale_date_mm/dd/yyyy"].dt.month.astype(str)
+
+# # Zeilen mit dem Format "yyyy-mm-dd"
+# df["sale_date_yyyy-mm-dd"] = df["sale_date_temp"].where(df["sale_date_temp"].str.len() > 7)
+# df["sale_date_yyyy-mm-dd"] = pd.to_datetime(df["sale_date_mm/dd/yyyy"], format='%Y-%m-%d')
+# df['sale_date_year_3'] = df["sale_date_yyyy-mm-dd"].dt.year.astype(str)
+# df['sale_date_month_3'] = df["sale_date_yyyy-mm-dd"].dt.month.astype(str)
+
+# # Zusammenführung der Jahr-Spalten
+# df["sale_date_year"] = (df["sale_date_year_1"].fillna(df["sale_date_year_2"]).fillna(df["sale_date_year_3"]))
+
+# # Zusammenführung der Monat-Spalten
+# df["sale_date_month"] = (df["sale_date_month_1"].fillna(df["sale_date_month_2"]).fillna(df["sale_date_month_3"]))
+# df["sale_date_month"] = pd.to_numeric(df["sale_date_month"], errors="coerce")
+# df["sale_date_month"] = df["sale_date_month"].astype("Int64")
+
+# df = df.drop(columns=['Sale_date', 'sale_date_month_1', 'sale_date_year_2', 'sale_date_month_2', 'sale_date_yyyy-mm-dd', 'sale_date_year_3', 'sale_date_month_3', 'sale_date_mm/dd/yyyy', 'sale_date_temp', 'sale_date_yyyy-mm','sale_date_year_1'])
