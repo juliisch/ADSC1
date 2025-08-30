@@ -23,11 +23,13 @@ Dieses Repository enthält den Code-Teil der Studienarbeit für das Modul ADSC21
 
     Nach der Installation der Bibliotheken ist es erforderlich, das Programm neu zu starten, damit diese wirksam werden.
 
-2. **Führen Sie das Notebook aus**
+2. **Führen Sie die Notebooks aus**
 
-    - In dem Notebook `notebooks/01_Merge.iypnb` werden die Daten der einzelnen Jahre zu einem Datensatz zusammengeführt.
-    - Das Notebook `notebooks/02_EDA.iypnb` beinhaltet die Dateneinsicht, Datenaufbereitung. 
-    - In dem Notebook `notebooks/03_Visualization.iypnb` werden die zusammengeführten und aufbereiteten Daten grafisch dargestellt. 
-    - Das Notebook `notebooks/04_Modelling.iypnb` beinhaltet das Training der verschiednen Modelle inklusive der Evaluation und anwendung der XAI Methoden. 
+    - `notebooks/01_Merge.iypnb`: Zusammenführung der einzelnen Jahresdatensätze zu einem Gesamtdatensatz.
+    - `notebooks/02_Exploration.iypnb`: Dateneinsicht und Datenaufbereitung
+    - `notebooks/03_Visualization.iypnb`: Grafische Darstellung der aufbereiteten Daten 
+    - `notebooks/04_Modelling.iypnb`: Training verschiedener ML-Modelle, Hyperparametertuning, Evaluation und Anwendung der XAI-Methoden
     
-    Hinweis: In der Datei `notebooks/functions.py` befinden sich die verwendeten geschriebenen Funktionen. 
+    
+    **<span style="color:red">Hinweis:</span>**
+    In der Datei `notebooks/functions.py` befinden sich die selbstgeschriebenen und verwendeten Funktionen. 
