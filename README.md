@@ -26,7 +26,7 @@ Dieses Repository enthält den Code-Teil der Studienarbeit für das Modul ADSC21
 2. **Führen Sie die Notebooks aus**
 
     - `notebooks/01_Merge.iypnb`: Zusammenführung der einzelnen Jahresdatensätze zu einem Gesamtdatensatz.
-    - `notebooks/02_Exploration.iypnb`: Dateneinsicht und Datenaufbereitung
+    - `notebooks/02_Preperation.iypnb`: Dateneinsicht und Datenaufbereitung
     - `notebooks/03_Visualization.iypnb`: Grafische Darstellung der aufbereiteten Daten 
     - `notebooks/04_Modelling.iypnb`: Training verschiedener ML-Modelle, Hyperparametertuning, Evaluation und Anwendung der XAI-Methoden
     

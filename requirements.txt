@@ -1,9 +1,6 @@
 ipykernel
 pandas
+numpy
+scikit-learn
+shap
 matplotlib
-pyproj
-ydata-profiling
-folium
-geopy
-pyarrow
-xgboost
