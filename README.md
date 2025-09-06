@@ -1,6 +1,8 @@
 # ADSC1
 Dieses Repository enthält den Code-Teil der Studienarbeit für das Modul ADSC21 Applied Data Science II: Machine Learning und Reporting.
 
+In dem Ordner `data` befinden sich die heruntergeladenen Daten, welche in diesem Projekt verwendet werden. Der Ordner `notebooks` beinhaltet die einzelnen Notebooks zur Ausführung des Projektes. Zudem werden die erstellten Grafiken in dem Ordner `output` gespeichert. 
+
 
 ### Installation
 
@@ -11,6 +13,21 @@ Dieses Repository enthält den Code-Teil der Studienarbeit für das Modul ADSC21
     ```
     ```bash
     cd ADSC1
+    ```
+
+2. **Setze eine virtuelle Umgebung auf**
+    ```bash
+        python3 -m venv adsc_env
+    ```
+    ```bash
+        source adsc_env/bin/activate
+    ```
+    ```bash
+        pip install ipykernel
+    ```
+
+    ```bash
+        python -m ipykernel install --user --name=adsc_env --display-name "Python (adsc_env)"
     ```
 
 2. **Bibliotheken installieren**
