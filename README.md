@@ -17,17 +17,17 @@ In dem Ordner `data` befinden sich die heruntergeladenen Daten, welche in diesem
 
 2. **Setze eine virtuelle Umgebung auf**
     ```bash
-        python3 -m venv adsc_env
+    python3 -m venv adsc_env
     ```
     ```bash
-        source adsc_env/bin/activate
+    source adsc_env/bin/activate
     ```
     ```bash
-        pip install ipykernel
+    pip install ipykernel
     ```
 
     ```bash
-        python -m ipykernel install --user --name=adsc_env --display-name "Python (adsc_env)"
+    python -m ipykernel install --user --name=adsc_env --display-name "Python (adsc_env)"
     ```
 
 2. **Bibliotheken installieren**
